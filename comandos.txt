@@ -1,0 +1,111 @@
+CDM Python
+    pip install virtualenv
+    python -m virtualenv venv 
+    python -m virtualenv --version
+    cd venv\Script\activate
+    python -m pip install django //Esto solo es para instalar django en pip, pero no crea ningun proyecto
+    django-admin --version 
+    django-admin startproject mysite . //Esto si creo el proyecto django, se tiene que ejecutar fuera del entorno virtualenv
+    python .\manage.py runserver //
+    python .\manage.py runserver 3000
+
+    python manage.py --help
+    python .\manage.py startapp myapp
+
+CDM git
+    git config --global user.email albornozg.rene@gmail.com
+    git config --global user.name ReneAG
+    git config --global -l
+
+    git init
+    git status -s 
+    git add clase.py
+    git add *
+    git commit -m "comentario de la version"
+
+    git branch -M main
+
+    git remote add origin git@github.com:ReneAG/djangoproject.git
+    git branch -M main
+    git push -u origin main
+
+    git log --oneline
+    git reset --hard aae4e28
+
+
+Generando una nueva clave SSH
+    Puede generar una nueva clave SSH en su máquina local. Después de generar la clave, 
+    puede agregar la clave a su cuenta en GitHub.com para habilitar la autenticación 
+    para las operaciones de Git a través de SSH.
+
+    Nota: GitHub mejoró la seguridad al descartar tipos de claves antiguos e inseguros el 15 de marzo de 2022.
+    A partir de esa fecha, las claves DSA ( ssh-dss) ya no se admiten. No puede agregar 
+    claves DSA nuevas a su cuenta personal en GitHub.com.
+
+    Las claves RSA ( ssh-rsa) con fecha valid_after anterior al 2 de noviembre de 2021 
+    pueden seguir utilizando cualquier algoritmo de firma. Las claves RSA generadas 
+    después de esa fecha deben usar un algoritmo de firma SHA-2. Es posible que algunos
+    clientes más antiguos deban actualizarse para poder usar las firmas SHA-2.
+
+    Pasos
+        Abre Git Bash .
+
+        Pegue el texto a continuación, sustituyéndolo por su dirección de correo electrónico de GitHub.
+        ssh-keygen -t ed25519 -C "your_email@example.com"
+        
+        Nota: si está utilizando un sistema heredado que no es compatible con el algoritmo Ed25519, utilice:
+        ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+
+        Esto crea una nueva clave SSH, utilizando el correo electrónico proporcionado como etiqueta. Se indicara
+        la ruta donde se guardar la clave (/c/Users/Gloria/.ssh/id_ed25519)
+
+            Generating public/private ALGORITHM key pair.
+        
+        Cuando se le solicite "Ingrese un archivo en el que guardar la clave", puede presionar Entrar para 
+        aceptar la ubicación predeterminada del archivo. Tenga en cuenta que si creó claves SSH 
+        anteriormente, ssh-keygen puede pedirle que vuelva a escribir otra clave, en cuyo caso le 
+        recomendamos que cree una clave SSH con un nombre personalizado. Para hacerlo, 
+        escriba la ubicación del archivo predeterminado y reemplace id_ssh_keyname con su nombre de clave personalizado.
+
+        > Enter a file in which to save the key (/c/Users/YOU/.ssh/id_ALGORITHM):[Press enter]
+
+        Cuando se le solicite, escriba una frase de contraseña segura. Para obtener más información, 
+        consulte "Trabajar con frases de contraseña de clave SSH ".
+
+        > Enter passphrase (empty for no passphrase): [Type a passphrase]
+        > Enter same passphrase again: [Type passphrase again]
+
+    Agregar su clave SSH al ssh-agent
+        Antes de agregar una nueva clave SSH al ssh-agent para administrar 
+        sus claves, debería haber verificado las claves SSH existentes y 
+        haber generado una nueva clave SSH.
+        Si tiene instalado GitHub Desktop , puede usarlo para clonar repositorios 
+        y no tratar con claves SSH.
+
+        Asegúrese de que el agente ssh se esté ejecutando. Puede usar las 
+        instrucciones de "Inicio automático del agente ssh" en " Trabajar 
+        con frases de contraseña de clave SSH ", o iniciarlo manualmente:
+
+        # start the ssh-agent in the background
+        $ eval "$(ssh-agent -s)"
+        > Agent pid 59566
+        Agregue su clave privada SSH al ssh-agent. Si creó su clave con un nombre diferente, o si está agregando una clave existente que tiene un nombre diferente, reemplace id_ed25519 en el comando con el nombre de su archivo de clave privada.
+
+        $ ssh-add ~/.ssh/id_ed25519
+        Agregue la clave SSH a su cuenta en GitHub. Para obtener más información, consulte " Agregar una nueva clave SSH a su cuenta de GitHub ".
+
+VC F1
+    select interprete
+    create new terminal
+
+
+
+Desde powershell admin
+     Set-ExecutionPolicy Unrestricted -scope LocalMachine
+     Set-ExecutionPolicy Unrestricted -scope CurrentUser
+     Get-ExecutionPolicy -list
+
+
+VC Metacomandos
+    Control + Mayusculas + ñ
+    Control + C 

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Configurar llaves SSH en Git y GitHub</h1>
+    <p><strong>¿Para qué necesitamos la criptografía asimétrica?</strong></p> 
+    <p>Cuando enviamos datos por internet, ya sea una imagen, un archivo o sólo un simple mensaje, corremos el riesgo de que nos roben nuestra información en el intento, antes de que llegue al receptor.
+    <p><strong>¿Qué es la criptografía asimétrica?</strong></p>
+    <p>La criptografía asimétrica es la forma segura de enviar y recibir un mensaje, ya que incluso si llega a caer en las manos de otra persona, nunca podrá leer el mensaje.       
+    <p><strong>¿Cómo funciona?</strong></p>
+    <p>En este caso, Bernardo le quiere mandar un mensaje a Ana, ambos cuentan con una llave pública y una privada que están ligadas con un algoritmo matemático, Ana le da a Bernardo su llave pública y ella conserva la llave privada, Bernardo manda su mensaje cifrado con la llave pública que le proporcionó Ana, Ana recibe el mensaje de Bernardo y lo desencripta con su llave privada de esta manera Ana y sólo Ana podrá leer el mensaje que le envió Bernardo.</p>
+    <p>     No estamos exentos a estos ataques a la hora de hacer un push o un pull a GitHub.
+        <br>O de igual forma pueden crackear el usuario y contraseña y así tener acceso al código de nuestros proyectos, por este motivo debemos tener una conexión segura entre las dos partes.
+
+    </p>
+    <h2>Cómo hacerlo  en Windows/Linux</h2>        
+    <p>
+        En nuestra consola de git bash(Windows) o nuestra consola (Linux) nos movemos a home, por que las llaves pueden 
+        ser para todos los proyectos en los que trabajemos.
+    </p>
+    <p>Luego generamos las llaves con ssh-keygen seguidos de los parámetros:
+        <ul>
+            <li>-t aquí ponemos el algoritmo de encriptación que queremos en este caso ocuparemos la más común que es RSA,</li>
+            <li>-b aquí vamos a especificar que tan compleja es la llave, </li>
+            <li>seguido de -C aquí vamos a poner el email al que se va a configurar la llave.</li>
+        </ul> 
+    </p>
+    
+    <p><code>ssh-keygen -t rsa -b 4096 -C “tu_email@gmail.com”</code></p> 
+    <p>    
+        Nos pide la ruta en la que se va a guardar las credenciales, en este caso damos enter, para que las guarde en home: 
+        <br><mark>Enter file in which to save the key (/c/Users/kris/.shh/id_rsa):</mark>
+        <br>Después nos pide una contraseña con espacios (es recomendable ponerla)
+        <br><mark>Enter passphrase (empty for no passphrase):</mark>
+        <br><mark>Enter same passphrase again:</mark>
+        <br>Volvemos a ingresar la contraseña:
+        <br>Nos genera la llave privada: id_rsa en una carpeta oculta .ssh dentro del directorio home y la llave pública id_rsa.pub
+        <br><mark>Your identification has been saved in /c/Users/kris/.ssh/id_rsa</mark>
+        <br><mark>Your public key has been in /c/Users/kris/.ssh/id_rsa.pub</mark>
+        <br>Una vez obtenido el resultado sabremos que hemos creado nuestras llaves (pública y privada) SSH satisfactoriamente al arrojar la huella digital:
+        <br>Para comprobarlo escribimos el comando:
+        <br><code>ls -al ~/.ssh</code>
+        <br>Debemos evaluar si está corriendo el servidor de ssh:
+        <br><code>eval $(ssh-agent -s)</code>
+        <br>Agregar la llave privada a Git (Nos pide el password que le dimos con espacios).
+        <br><code>sh-add ~/.ssh/id_rsa</code>
+        
+        
+        Nos aseguramos de copiar el contenido de nuestra llave SSH pública (id_rsa.pub)
+        lo podemos hacer con el uso de vi o nano:
+        
+        vi ~/.ssh/id_rsa.pub
+        
+        Copiamos el contenido. (Salimos con esc+shift+zz)
+        En estos momentos debemos de ir a nuestro GitHub → settings → SSH and GPG Keys → New SSH Key
+        
+        
+        En title ponemos algo que identifique la Lap o el computador que estemos usando, en key pegamos lo que copiamos de nuestra llave pública:
+        
+        
+        Damos click a Add SSH Key, podemos ver que nos agregó una nueva llave con el nombre que le dimos, pero aún no se ha usado.
+        
+        
+        Copiamos la llave pública de cualquiera de nuestros repositorio de GitHub (Clone with SSH)
+        
+        
+        Tenemos que posicionarnos en el proyecto que copiamos la llave SSH pública de GitHub y con el siguiente comando podemos ver a qué repositorio apunta nuestro proyecto:
+        
+        git remote -v
+        
+        
+        Seteamos la ruta
+        
+        git remote set-url origin git@github.com:krisleon99/calculator_utm.git
+        
+        
+        En este caso no nos dice nada la consola, pero podemos verificarlo ingresando de nuevo el comando (podemos notar que cambió el origin):
+        
+        git remote -v
+        
+        
+        Y listo, podemos comprobarlo haciendo un push al repositorio y no nos pedirá el usuario ni la contraseña (La primera vez nos pregunta que si estamos seguros de continuar la coneccion con una llave RSA, le damos yes).
+        
+        
+        Mac:
+        
+        ssh-keygen -t rsa -b 4096 -C “tu_email@gmail.com”
+        
+        Debemos evaluar si está corriendo el servidor de ssh en este caso para Mac el signo de pesos y lo que va entre paréntesis es entre comillas:
+        
+        eval “$(ssh-agent -s)”
+        
+        ¿Usas macOS Sierra 10.12.2 o superior?
+        
+        Haz lo siguiente:
+        
+        cd ~/.ssh
+        Crea un archivo config…
+        Con Vim vim config
+        Con VSCode code config
+        Pega la siguiente configuración en el archivo…
+        Host *
+        AddKeysToAgent yes
+        UseKeychain yes
+        IdentityFile ruta-donde-guardaste-tu-llave-privada
+        
+        Por último agrega tu llave privada:
+        
+        ssh-add -K ~/.ssh/id_rsa
+        
+        Conoce más información sobre qué es Git y cómo configurar llaves SSH.    </p>
+
+</body>
+</html>
