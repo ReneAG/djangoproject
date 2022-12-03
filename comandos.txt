@@ -2,7 +2,7 @@ CDM Python
     pip install virtualenv
     python -m virtualenv venv 
     python -m virtualenv --version
-    cd venv\Script\activate
+    .\venv\Script\activate
     python -m pip install django //Esto solo es para instalar django en pip, pero no crea ningun proyecto
     django-admin --version 
     django-admin startproject mysite . //Esto si creo el proyecto django, se tiene que ejecutar fuera del entorno virtualenv
@@ -11,6 +11,11 @@ CDM Python
 
     python manage.py --help
     python .\manage.py startapp myapp
+
+    python  .\manage.py makemigrations // crea el modelo en la carpeta migrations de cada proyecto
+    python  .\manage.py makemigrations myapp
+    python  .\manage.py migrate //Crea las tablas en la base de datos
+
 
 CDM git
     git config --global user.email albornozg.rene@gmail.com
@@ -94,8 +99,9 @@ Generando una nueva clave SSH
         $ ssh-add ~/.ssh/id_ed25519
         Agregue la clave SSH a su cuenta en GitHub. Para obtener más información, consulte " Agregar una nueva clave SSH a su cuenta de GitHub ".
 
-VC F1
+VC F1 ***
     select interprete
+        Python venv
     create new terminal
 
 
